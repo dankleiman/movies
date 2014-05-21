@@ -27,7 +27,19 @@ get '/' do
 end
 
 get '/movies' do
-  @movies = get_movies
+
+  page = params[:page].to_i
+  big_list = get_movies
+  if big_list % 20 == 0
+    @max_length = (big_list.length/20)
+  else
+    @max_length = ((big_list.length/20) + 1)
+  end
+  if params[:page] == nil
+    page = 1
+  end
+  @movies = big_list[(20*(page-1))..(20*(page-1)+19)]
+
   erb :movies
 end
 

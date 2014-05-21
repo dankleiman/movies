@@ -30,7 +30,7 @@ get '/movies' do
 
   page = params[:page].to_i
   big_list = get_movies
-  if big_list % 20 == 0
+  if big_list.length % 20 == 0
     @max_length = (big_list.length/20)
   else
     @max_length = ((big_list.length/20) + 1)

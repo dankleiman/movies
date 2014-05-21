@@ -1,6 +1,5 @@
 <h1>Movie Index</h1>
 
-
 <ul>
 <%@movies.each do |movie|%>
 <li><a href="/movies/<%=movie[:id]%>"><%=movie[:title]%></a></li>
@@ -12,6 +11,7 @@
   <input type="number" name="page" id="page" min="1" max="<%=@max_length%>" />
   <input type="submit" value="Go" />
 </form>
+
 
 
 

@@ -1,17 +1,17 @@
 <h1>Movie Index</h1>
 
-<form action="/movies" method="get">
-  <label for="page">Jump to page: </label>
-  <input type="number" name="page" id="page" min="1" max="<%=@max_length%>" />
-  <input type="submit" value="Go" />
-</form>
+
 <ul>
 <%@movies.each do |movie|%>
 <li><a href="/movies/<%=movie[:id]%>"><%=movie[:title]%></a></li>
 <%end%>
 </ul>
 
-<%=@max_length.inspect%>
+<form action="/movies" method="get">
+  <label for="page">Jump to page: </label>
+  <input type="number" name="page" id="page" min="1" max="<%=@max_length%>" />
+  <input type="submit" value="Go" />
+</form>
 
 
 

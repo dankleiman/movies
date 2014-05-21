@@ -23,22 +23,39 @@ end
 
 
 get '/' do
+  @movies = get_movies
   erb :index
 end
 
 get '/movies' do
 
-  page = params[:page].to_i
   big_list = get_movies
-  if big_list.length % 20 == 0
-    @max_length = (big_list.length/20)
+  #generate search results page first if there was a search
+  query = params[:query]
+  if query != nil
+    search_results = []
+    big_list.each do |movie|
+      # binding.pry
+      if movie[:title].include?(query)
+        search_results << movie
+      elsif movie[:synopsis] != nil && movie[:synopsis].include?(query)
+        search_results << movie
+      end
+    end
+    @movies = search_results
   else
-    @max_length = ((big_list.length/20) + 1)
-  end
-  if params[:page] == nil
-    page = 1
-  end
-  @movies = big_list[(20*(page-1))..(20*(page-1)+19)]
+    #otherwise, displays movies 20 per page
+    page = params[:page].to_i
+    if big_list.length % 20 == 0
+      @max_length = (big_list.length/20)
+    else
+      @max_length = ((big_list.length/20) + 1)
+    end
+    if params[:page] == nil
+      page = 1
+    end
+    @movies = big_list[(20*(page-1))..(20*(page-1)+19)]
+   end
 
   erb :movies
 end
